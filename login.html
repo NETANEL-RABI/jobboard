@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>התחברות - לוח דרושים</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header>
+    <h1>לוח דרושים</h1>
+    <nav id="nav-auth"></nav>
+  </header>
+
+  <main>
+    <div class="form-box">
+      <h2>התחברות</h2>
+      <form id="login-form">
+        <label for="email">אימייל</label>
+        <input type="email" id="email" required>
+
+        <label for="password">סיסמה</label>
+        <input type="password" id="password" required>
+
+        <button type="submit">התחברות</button>
+      </form>
+      <div id="msg" class="message"></div>
+      <div class="form-footer">
+        אין לך חשבון? <a href="signup.html">הרשמה</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const msg = document.getElementById("msg");
+
+      msg.textContent = "מתחבר...";
+      msg.className = "message";
+
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        msg.textContent = "שגיאה: " + error.message;
+        msg.className = "message error";
+        return;
+      }
+
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
