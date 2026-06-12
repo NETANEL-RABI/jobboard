@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>הרשמה - לוח דרושים</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header>
+    <h1>לוח דרושים</h1>
+    <nav id="nav-auth"></nav>
+  </header>
+
+  <main>
+    <div class="form-box">
+      <h2>הרשמה</h2>
+      <form id="signup-form">
+        <label for="name">שם מלא</label>
+        <input type="text" id="name" required>
+
+        <label for="email">אימייל</label>
+        <input type="email" id="email" required>
+
+        <label for="password">סיסמה</label>
+        <input type="password" id="password" minlength="6" required>
+
+        <button type="submit">הרשמה</button>
+      </form>
+      <div id="msg" class="message"></div>
+      <div class="form-footer">
+        כבר רשום? <a href="login.html">התחברות</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    document.getElementById("signup-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const msg = document.getElementById("msg");
+
+      msg.textContent = "מבצע הרשמה...";
+      msg.className = "message";
+
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: name }
+        }
+      });
+
+      if (error) {
+        msg.textContent = "שגיאה: " + error.message;
+        msg.className = "message error";
+        return;
+      }
+
+      if (data.session) {
+        // אם אימות אימייל מבוטל - המשתמש מחובר ישר
+        window.location.href = "index.html";
+      } else {
+        msg.textContent = "ההרשמה בוצעה! נשלח אליך מייל לאישור החשבון - אנא אשר ואז התחבר.";
+        msg.className = "message success";
+      }
+    });
+  </script>
+</body>
+</html>
