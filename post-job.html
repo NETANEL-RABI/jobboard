@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>פרסום משרה - לוח דרושים</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header>
+    <h1>לוח דרושים</h1>
+    <nav id="nav-auth"></nav>
+  </header>
+
+  <main>
+    <div class="form-box" id="form-box">
+      <h2>פרסום משרה חדשה</h2>
+      <form id="job-form">
+        <label for="title">כותרת המשרה</label>
+        <input type="text" id="title" required>
+
+        <label for="location">מיקום</label>
+        <input type="text" id="location" placeholder="לדוגמה: תל אביב / מרחוק">
+
+        <label for="description">תיאור המשרה ודרישות</label>
+        <textarea id="description" required></textarea>
+
+        <button type="submit">פרסום משרה</button>
+      </form>
+      <div id="msg" class="message"></div>
+    </div>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    (async () => {
+      const user = await getCurrentUser();
+      if (!user) {
+        document.getElementById("form-box").innerHTML = `
+          <h2>פרסום משרה</h2>
+          <p>עליך להתחבר כדי לפרסם משרה.</p>
+          <div class="form-footer">
+            <a href="login.html">התחברות</a> | <a href="signup.html">הרשמה</a>
+          </div>
+        `;
+        return;
+      }
+
+      document.getElementById("job-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const title = document.getElementById("title").value.trim();
+        const location = document.getElementById("location").value.trim();
+        const description = document.getElementById("description").value.trim();
+        const msg = document.getElementById("msg");
+
+        msg.textContent = "מפרסם...";
+        msg.className = "message";
+
+        const postedBy = user.user_metadata?.full_name || user.email;
+
+        const { error } = await supabaseClient.from("jobs").insert({
+          title,
+          location,
+          description,
+          user_id: user.id,
+          posted_by: postedBy
+        });
+
+        if (error) {
+          msg.textContent = "שגיאה: " + error.message;
+          msg.className = "message error";
+          return;
+        }
+
+        msg.textContent = "המשרה פורסמה בהצלחה!";
+        msg.className = "message success";
+        document.getElementById("job-form").reset();
+        setTimeout(() => window.location.href = "index.html", 1000);
+      });
+    })();
+  </script>
+</body>
+</html>
