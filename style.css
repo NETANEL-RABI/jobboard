@@ -1,0 +1,223 @@
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --bg: #f4f6f9;
+  --card-bg: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --danger: #dc2626;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  direction: rtl;
+}
+
+header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+header h1 {
+  font-size: 22px;
+  margin: 0;
+  color: var(--primary);
+}
+
+nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+nav a, nav button {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 15px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+nav a.primary, nav button.primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+
+nav a:hover, nav button:hover {
+  background: var(--primary-dark);
+  color: white;
+}
+
+main {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.job-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.job-card h3 {
+  margin: 0 0 6px;
+  color: var(--primary);
+}
+
+.job-meta {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.job-desc {
+  white-space: pre-wrap;
+  margin-bottom: 10px;
+}
+
+.job-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.form-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.form-box h2 {
+  margin-top: 0;
+  color: var(--primary);
+}
+
+.form-box label {
+  display: block;
+  margin: 12px 0 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-box input,
+.form-box textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+.form-box textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.form-box button {
+  margin-top: 16px;
+  width: 100%;
+  padding: 12px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-box button:hover {
+  background: var(--primary-dark);
+}
+
+.message {
+  margin-top: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.message.error {
+  color: var(--danger);
+}
+
+.message.success {
+  color: #16a34a;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.form-footer a {
+  color: var(--primary);
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 40px 0;
+}
